@@ -4,7 +4,7 @@
 <br>
 <h4>배울 내용</h4>
 <hr>
-<ul>
+<ul style="list-style-type: none;">>
     <li>- 최근 업데이트된 리액트 18버전으로 진행 </li>
     <li>- 리액트 프로젝트 생성, 관리, 빌드하는 법</li>
     <li>- 컴포넌트, props, state를 이용한 모던 웹개발 </li>
@@ -22,7 +22,7 @@
 <br>
 <h4>필요한 사전 지식</h4>
 <hr>
-<ul>
+<ul style="list-style-type: none;">>
     <li>- HTML/CSS 기초 </li>
     <li>- JavaScript 기초 (var let const, function, if else, for, [], {} 자료 다루기)</li>
     <li>- JavaScript가 처음이라면 JavaScript 기초 강의 선행 추천드립니다. </li>
@@ -32,6 +32,6 @@
 <br>
 <h4>업데이트 사항</h4>
 <hr>
-<ul>
+<ul style="list-style-type: none;">>
     <li>- 리액트 18버전내용 추가</li>
 </ul>
