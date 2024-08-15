@@ -3,7 +3,7 @@
 <br>
 
 #### 01강 React 왜 씁니까 
-<br>
+
 <details>
 <summary>더보기</summary>
 
@@ -50,7 +50,7 @@ Vue, Svelte, SolidJS 이런게 요즘 뜨고 있긴 한데
 
 이 중에 리액트가 가장 틀딱이고 유저가 가장 많기 때문에 리액트를 쓰도록 합시다. 
 </details>
-
+<br>
 
 #### 2강 리액트 React 설치와 개발환경 셋팅
 
