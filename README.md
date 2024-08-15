@@ -2,10 +2,9 @@
 <br>
 <br>
 <br>
+
 ## [배울 내용]
 <hr>
-<br>
-<br>
 <ul>
     <li>- 최근 업데이트된 리액트 18버전으로 진행 </li>
     <li>- 리액트 프로젝트 생성, 관리, 빌드하는 법</li>
@@ -22,10 +21,9 @@
 <br>
 <br>
 <br>
+
 ## [필요한 사전 지식]
 <hr>
-<br>
-<br>
 <ul>
     <li>- HTML/CSS 기초 </li>
     <li>- JavaScript 기초 (var let const, function, if else, for, [], {} 자료 다루기)</li>
@@ -34,10 +32,9 @@
 <br>
 <br>
 <br>
+
 ## [업데이트 사항]
 <hr>
-<br>
-<br>
 <ul>
     <li>- 리액트 18버전내용 추가</li>
 </ul>
