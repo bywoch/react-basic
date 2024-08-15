@@ -2,7 +2,7 @@
 <br>
 <br>
 
-#### React 왜 씁니까 
+#### 01강 React 왜 씁니까 
 <br>
 리액트 문법부터 들이밀면 누구나 이해가 가지 않습니다. 
 
@@ -11,7 +11,8 @@
 Naver Vibe, Flipkart, Instagram 이런 웹사이트 들어가봅시다.
 
 들어가면 페이지 전환 같은게 새로고침 없이 부드럽게 동작합니다.
-<br>
+
+
 이런 사이트들을 Single Page Application 이라고 하는데
 
 - html 파일을 1개만 쓰고
