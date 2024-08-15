@@ -15,8 +15,9 @@ Naver Vibe, Flipkart, Instagram 이런 웹사이트 들어가봅시다.
 이런 사이트들을 Single Page Application 이라고 하는데
 
 - html 파일을 1개만 쓰고
+
 - 다른 페이지를 보여주고 싶을 때 html 부분만 샥 갈아치워서 보여줍니다.
-- 
+
 그래서 부드럽게 동작합니다. 
 
 <br>
@@ -30,11 +31,9 @@ Naver Vibe, Flipkart, Instagram 이런 웹사이트 들어가봅시다.
 <br>
 
 - 리액트 쓰는 또 다른 이유들은
-
     - html을 함수, array, object 이런 곳에 보관하고 재사용할 수 있어서
 
 - 큰 프로젝트일 수록 html 관리 편리해짐
-
     - React Native를 쓰면 같은 리액트 문법으로 모바일 앱개발도 가능합니다.
 
 거기선 html css 문법만 약간 다릅니다.
