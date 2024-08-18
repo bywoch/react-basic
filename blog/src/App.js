@@ -3,57 +3,96 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 
+// React 컴포넌트의 시작, 모든 UI는 이 함수에서 정의
 function App() {
 
   // Array 자료 형식
   let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동 맛집', '파이썬독학']);
-  let [따봉, 따봉변경] = useState(0);
+  //let [따봉, 따봉변경] = useState(0);
+  let [따봉, 따봉변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
-  
+
   return (
     <div className="App">
 
       <div className="black-nav">
         <h1>ReactBLog</h1>
       </div>
-
+      <br />
+      {/* 버튼을 클릭하면 첫 번째 글 제목을 변경하는 로직 */}
       <button onClick={() => {
         /*
         글제목[0] = '여자코트 추천'; ← 영구적으로 수정해버림
-        // array/objaect 다룰때 원본은 보존하는게 좋음
-        */
-       //
+        글제목 배열의 첫 번째 요소를 직접 수정하는 것은 안티패턴
+        React에서 상태를 직접 수정하는 대신, 복사본을 만들고 수정해야함
+        - array/objaect 다룰때 원본은 보존하는게 좋음
+         */
+        //
         let copy = [...글제목]; // ...← 은 array를 새로 바꿔주세요/괄호 벗겨주세요
 
-        copy[0] = '여자 코트 추천';
-        글제목변경(copy);
-        //  state가 '글제목'처럼 array/object면 독립적 카피본(shallow copy)을 만들어서 수정해야 함
-      }}>글수정</button>
+        /* copy[0] = '여자 코트 추천'; */
 
-      <div className="list">
+        /* if (copy[0] === '남자 코트 추천') {
+          copy[0] = '여자 코트 추천';
+        } else {
+          copy[0] = '남자 코트 추천';
+        } */
+
+        // if-else 구조가 아닌 삼항 연산자
+        copy[0] = copy[0] === '남자 코트 추천' ? '여자 코트 추천' : '남자 코트 추천';
+
+        글제목변경(copy);
+        // state가 '글제목'처럼 array/object면 독립적 카피본(shallow copy)을 만들어서 수정해야 함
+      }}>글수정</button>
+      <br />
+
+      {/*<div className="list">
         <h4>{글제목[0]} <span onClick={() => { 따봉변경(따봉 + 1) }}>👍</span> {따봉} </h4>
         <p>2월 17일 발행</p>
-      </div>
+      </div> 
       <div className="list">
         <h4>{글제목[1]}</h4>
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        {/* <h4 onClick={()=>{setModal(true)}}>{글제목[2]}</h4> */}
-        <h4 onClick={()=>{setModal(!modal)}}>{글제목[2]}</h4>
-        {/* ↑ 일반 자바스크립트 였다면 버튼 누르면 html을 직접 건들지만, 리액트에선 버튼을 누르면 스위치(state)만 건드림! ← 이 방식으로 정신 개조 필요ㅋ*/}
+        <h4 onClick={() => { setModal(!modal) }}>{글제목[2]}</h4>
         <p>2월 17일 발행</p>
       </div>
+      */}
+
       {/* <Modal></Modal> */}
-      {
-        /* 내부는 html 문법이기 때문에 if 문을 쓸 수가 없다
-        그래서 삼항 연산자를 쓴다 
-        '조건식 ? 참일 때 실행할 코드 : 거짓일 때 코드'
-        */
-       modal == true ? <Modal/> : null // null은 비어있는 html 용으로 자주 사용.
-      }
       {/* </Modal> 만 써도 가능*/}
+
+      {
+        글제목.map(function (a, i) { // 'a'는 배열의 요소, 'i'는 인덱스, 'i'는 반복문이 돌 때마다 1씩 증가하는 정수
+          return (
+            <div className="list">
+              <h4>
+                {글제목[i]} {/* 각 글 제목을 출력 */}
+                <span onClick={() => {
+                  // 따봉 배열을 복사한 후, 해당 글의 따봉 수를 1 증가
+                  let copy = [...따봉];
+                  copy[i] = copy[i] + 1;
+                  따봉변경(copy); // 상태를 업데이트
+                }}>👍</span> {따봉[i]}
+              </h4>
+              <p>2월 18일 발행</p>
+            </div>)
+        })
+      }
+      <br />
+      <button onClick={() => { setModal(!modal) }}>모달더보기</button>
+      <br />
+
       {/* return 안에는 병렬로 2개 이상 태그 금지 */}
+
+      {/* 내부는 html 문법이기 때문에 if 문을 쓸 수가 없다*/}
+      {
+        modal == true ? <Modal /> : null // null은 비어있는 html 용으로 자주 사용.
+      }
+      {/* 그래서 삼항 연산자를 쓴다
+        ※ '조건식 ? 참일 때 실행할 코드 : 거짓일 때 코드'*/}
+
     </div>
   );
 }
@@ -145,6 +184,21 @@ const Modal = () => {
 1. html, css로 미리 디자인 완성
 2. UI의 현재 상태를 state로 저장
 3. state에 따라 UI가 어떻게 보일지 자성
+
+<h4 onClick={()=>{setModal(true)}}>{글제목[2]}</h4>
+  ↑ 일반 자바스크립트 였다면 버튼 누르면 html을 직접 건들지만, 리액트에선 버튼을 누르면 스위치(state)만 건드림! ← 이 방식으로 정신 개조 필요ㅋ
+
+map 반복문
+var array = [2,3,4];
+array.map(function(){
+  console.log(1)
+});
+저러면 진짜로 console.log(1) 3번 실행됨 
+
+1. array 자료 갯수만큼 함수안의 코드 실행해줌
+2. 함수의 파라미터는 array안에 있던 자료임
+3. return에 뭐 적으면 array로 담아줌
+
 */
 
 /* 
