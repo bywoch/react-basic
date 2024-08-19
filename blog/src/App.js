@@ -1,7 +1,7 @@
 /* eslint-disable */ //WARNING 메세지 끄는 기능.
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 // React 컴포넌트의 시작, 모든 UI는 이 함수에서 정의
 function App() {
@@ -11,6 +11,8 @@ function App() {
   //let [따봉, 따봉변경] = useState(0);
   let [따봉, 따봉변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
+  let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState('');
 
   return (
     <div className="App">
@@ -20,7 +22,7 @@ function App() {
       </div>
       <br />
       {/* 버튼을 클릭하면 첫 번째 글 제목을 변경하는 로직 */}
-      <button onClick={() => {
+      <button type='button' onClick={() => {
         /*
         글제목[0] = '여자코트 추천'; ← 영구적으로 수정해버림
         글제목 배열의 첫 번째 요소를 직접 수정하는 것은 안티패턴
@@ -69,7 +71,9 @@ function App() {
             <div className="list">
               <h4>
                 {글제목[i]} {/* 각 글 제목을 출력 */}
-                <span onClick={() => {
+                <span onClick={(e) => {
+                  e.stopPropagation();
+                  // e.stopPropagation ← 상위 html로 퍼지는 이벤트 버블링을 막아줌
                   // 따봉 배열을 복사한 후, 해당 글의 따봉 수를 1 증가
                   let copy = [...따봉];
                   copy[i] = copy[i] + 1;
@@ -77,37 +81,83 @@ function App() {
                 }}>👍</span> {따봉[i]}
               </h4>
               <p>2월 18일 발행</p>
+              <button type='button' onClick={() => {
+                let copy = [...글제목];
+                copy.splice(i, 1);
+                글제목변경(copy);
+              }}>삭제</button>
             </div>)
         })
       }
+
       <br />
-      <button onClick={() => { setModal(!modal) }}>모달더보기</button>
+      <button type='button' onClick={() => { setModal(!modal) }}>모달더보기</button>
       <br />
+
+      <br />
+      <button type='button' onClick={() => { setTitle(0) }}>글제목1</button>
+      <button type='button' onClick={() => { setTitle(1) }}>글제목2</button>
+      <button type='button' onClick={() => { setTitle(2) }}>글제목3</button>
+      <br />
+
+      {/* 이벤트 핸들러 */}
+      <input type="text" name="text1" id="text1" onChange={(e) => {
+        입력값변경(e.target.value);
+        // console.log(입력값);
+      }} />
+
+      <button type='button' onClick={() => {
+        let copy = [...글제목];
+        copy.unshift(입력값);
+        글제목변경(copy);  // 상태 업데이트를 위해 copy를 인자로 전달
+      }}>급발행</button>
 
       {/* return 안에는 병렬로 2개 이상 태그 금지 */}
-
-      {/* 내부는 html 문법이기 때문에 if 문을 쓸 수가 없다*/}
       {
-        modal == true ? <Modal /> : null // null은 비어있는 html 용으로 자주 사용.
+        modal == true ? <Modal title={title} 글제목={글제목} />
+        /* modal == true ? <Modal color={'skyblue'} 글제목변경={글제목변경} 글제목={글제목}/> */ : null // null은 비어있는 html 용으로 자주 사용.
       }
-      {/* 그래서 삼항 연산자를 쓴다
-        ※ '조건식 ? 참일 때 실행할 코드 : 거짓일 때 코드'*/}
-
+      {/* 내부는 html 문법이기 때문에 if 문을 쓸 수가 없다  
+      그래서 삼항 연산자를 쓴다
+      ※ '조건식 ? 참일 때 실행할 코드 : 거짓일 때 코드'*/}
+      <Modal2></Modal2>
     </div>
   );
 }
 
-function Modal() { // ← 이런 구조를 컴포넌트라고 부름
+function Modal(props) { // ← 이런 구조를 컴포넌트라고 부름
   return (
     <> {/* 의미없는 <div> 쓰는 대신 <></> 사용해서 감싸줌 */}
-      <div className="modal">
-        <h4>제목</h4>
+      <div className="modal" style={{ background: props.color }}>
+        {/* <h4>{props.글제목[0]}</h4> */}
+        <h4>{props.글제목[props.title]}</h4>
         <p>날짜</p>
         <p>상세내용</p>
+        {/* <button type='button' onClick={() => {props.글제목변경(['여자 코트 추천', '강남 우동 맛집', '파이썬독학'])}}>글수정</button> */}
       </div>
       <div></div>
     </>
   )
+}
+
+// class 컴퍼넌트 문법
+class Modal2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'kim',
+      age: 20
+    }
+  }
+  render() {
+    return (
+      <div>안녕 {this.state.name}
+        <button onClick={() => {
+          this.setState({ age: 21 })
+        }}></button>
+      </div>
+    )
+  }
 }
 
 export default App;
@@ -198,6 +248,20 @@ array.map(function(){
 1. array 자료 갯수만큼 함수안의 코드 실행해줌
 2. 함수의 파라미터는 array안에 있던 자료임
 3. return에 뭐 적으면 array로 담아줌
+
+-
+
+props
+부모 → 자식 state 전송하는 법
+1.<자식컴포넌트 작명={state이름}>
+2. props 파라미터 등록 후, "props.작명" 사용
+*props 전송은 부모 → 자식끼리만 전송 가능
+*컴포넌트가 많아지면 props 쓰기가 귀찮아짐
+
+-
+
+class 란?
+- 변수, 함수 보관함
 
 */
 
